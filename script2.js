@@ -1,28 +1,38 @@
-class Pessoa extends React.Component {
+class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            nome:this.props.nome
+            status:0
         };
 
-        this.limparNome =  this.limparNome.bind(this);
-        this.setNome = this.setNome.bind(this);
+        this.ativar = this.ativar.bind(this);
+        this.desativar = this.desativar.bind(this);
     }
 
-    limparNome() {
-        this.setState({nome:''});
+    ativar() {
+        this.setState({status:1});
     }
 
-    setNome(nome){
-        this.setState({nome});
+    desativar() {
+        this.setState({status:0});
     }
 
     render() {
-        return (
+        let statusMsg;
+        let statusBtn;
+
+        if(this.state.status == 1) {
+            statusMsg = "Ativado";
+            statusBtn = <button onClick={this.desativar}>Desativar</button>;
+        }else {
+            statusMsg = "Desativado";
+            statusBtn = <button onClick={this.ativar}>Ativar</button>;
+        }
+
+        return(
             <div>
-                <h1>Olá, meu nome é {this.state.nome}</h1>
-                <button onClick={this.limparNome}>Limpar nome</button>
-                <button onClick={()=>{this.setNome('João')}}>Trocar nome para joão</button>
+                <p>Status: {statusMsg}</p>
+                {statusBtn}
             </div>
         );
     }
@@ -30,7 +40,7 @@ class Pessoa extends React.Component {
 
 let elemento = (
     <div>
-        <Pessoa nome="Josielson" />
+        <Login />
     </div>
 );
 
